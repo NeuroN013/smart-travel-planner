@@ -1,0 +1,127 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SmartTravelPlanner.MainWindow"
+        Title="Smart Travel Planner"
+        Width="700" Height="820"
+        MinWidth="700" MinHeight="420"
+        Background="#F4F6FA"
+        WindowStartupLocation="CenterScreen">
+
+    <!-- Прокручування -->
+    <Grid RowDefinitions="*, Auto">
+
+        <ScrollViewer Grid.Row="0"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      AllowAutoHide="False">
+
+            <StackPanel Margin="24,24,24,12" MaxWidth="1100" Spacing="14">
+
+                <!-- Заголовок -->
+                <TextBlock Classes="h1" Text="✈  Smart Travel Planner" />
+
+                <!-- Профіль мандрівника -->
+                <Border Classes="card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Classes="section" Text="Traveler Profile" />
+                        <Grid ColumnDefinitions="*, *, Auto" ColumnSpacing="12">
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Classes="label" Text="Name" />
+                                <TextBox x:Name="TxtTravelerName" PlaceholderText="e.g. Alice" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Classes="label" Text="Current location" />
+                                <TextBox x:Name="TxtLocation" PlaceholderText="e.g. Kyiv" />
+                            </StackPanel>
+                            <Button Grid.Column="2" Classes="primary" Content="🎒 Create Traveler"
+                                    Click="OnCreateTravelerClick" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Планування маршруту -->
+                <Border Classes="card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Classes="section" Text="Route Planning" />
+                        <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="12">
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Classes="label" Text="Destination" />
+                                <TextBox x:Name="TxtDestination" PlaceholderText="e.g. Berlin" />
+                            </StackPanel>
+                            <Button Grid.Column="1" Classes="primary" Content="🧭 Plan Route"
+                                    Click="OnPlanRouteClick" />
+                            <Button Grid.Column="2" Classes="secondary" Content="🗺️ Load Map (.txt)"
+                                    Click="OnLoadMapClick" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Ручне редагування карти -->
+                <Border Classes="card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Classes="section" Text="Manual Map Management" />
+                        <Grid ColumnDefinitions="*, *, 110, Auto, Auto" ColumnSpacing="12">
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Classes="label" Text="City A" />
+                                <TextBox x:Name="TxtCityA" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Classes="label" Text="City B" />
+                                <TextBox x:Name="TxtCityB" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Classes="label" Text="Distance, km" />
+                                <TextBox x:Name="TxtDistance" />
+                            </StackPanel>
+                            <Button Grid.Column="3" Classes="secondary" Content="➕ Add Edge"
+                                    Click="OnAddEdgeClick" />
+                            <Button Grid.Column="4" Classes="danger" Content="➖ Remove Edge"
+                                    Click="OnRemoveEdgeClick" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Результат маршруту -->
+                <Border Classes="card">
+                    <DockPanel LastChildFill="True">
+                        <Grid DockPanel.Dock="Top" ColumnDefinitions="*, Auto" Margin="0,0,0,10">
+                            <TextBlock Grid.Column="0" Classes="section" Text="Planned Route" VerticalAlignment="Center" />
+                            <Border Grid.Column="1" Background="#EFF6FF" CornerRadius="999" Padding="12,4">
+                                <TextBlock x:Name="LblTotalDistance" Text="Total distance: -"
+                                           FontWeight="SemiBold" Foreground="#1D4ED8" />
+                            </Border>
+                        </Grid>
+                        <TextBox x:Name="TxtRouteOutput"
+                                 IsReadOnly="True"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 FontSize="15"
+                                 Background="#F8FAFC"
+                                 Padding="12"
+                                 MinHeight="120"
+                                 MaxHeight="320"
+                                 Margin="0,1,0,0" />
+                    </DockPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Закріплена нижня панель: завжди видима -->
+        <Border Grid.Row="1" Background="#F4F6FA" BorderBrush="#E3E8F0" BorderThickness="0,1,0,0">
+            <StackPanel Margin="24,12,24,16" MaxWidth="1100" Spacing="10">
+                <Grid ColumnDefinitions="Auto, Auto, Auto, *, Auto" ColumnSpacing="10">
+                    <Button Grid.Column="0" Classes="secondary" Content="💾  Save (.json)" Click="OnSaveClick" />
+                    <Button Grid.Column="1" Classes="secondary" Content="📂  Load (.json)" Click="OnLoadClick" />
+                    <Button Grid.Column="2" Classes="secondary" Content="🗑️  Clear Route" Click="OnClearRouteClick" />
+                    <Button Grid.Column="4" Classes="danger" Content="❌  Exit" MinWidth="110"
+                            HorizontalContentAlignment="Center" Click="OnExitClick" />
+                </Grid>
+                <!-- Панель статусу -->
+                <Border Background="#E2E8F0" CornerRadius="8" Padding="12,8">
+                    <TextBlock x:Name="LblStatus" Text="Status: Ready" Foreground="#475569" FontSize="13"
+                               TextWrapping="Wrap" />
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
